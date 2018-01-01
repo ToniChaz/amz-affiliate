@@ -1,0 +1,86 @@
+#content_container table.dataTable thead {
+    background: -moz-linear-gradient(top, rgba(255, 0, 0, 1) 0%, rgba(68, 68, 68, 1) 10%, rgba(40, 40, 40, 1) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(255, 0, 0, 1)), color-stop(10%, rgba(68, 68, 68, 1)), color-stop(100%, rgba(40, 40, 40, 1)));
+    background: -webkit-linear-gradient(top, rgba(255, 0, 0, 1) 0%, rgba(68, 68, 68, 1) 10%, rgba(40, 40, 40, 1) 100%);
+    background: -o-linear-gradient(top, rgba(255, 0, 0, 1) 0%, rgba(68, 68, 68, 1) 10%, rgba(40, 40, 40, 1) 100%);
+    background: -ms-linear-gradient(top, rgba(255, 0, 0, 1) 0%, rgba(68, 68, 68, 1) 10%, rgba(40, 40, 40, 1) 100%);
+    background: linear-gradient(to bottom, rgba(255, 0, 0, 1) 0%, rgba(68, 68, 68, 1) 10%, rgba(40, 40, 40, 1) 100%);
+    filter: progid:DXImageTransform.Microsoft.grad;
+}
+
+#content_container table.dataTable tbody tr {
+    margin: 0 -1px 24px 0;
+    text-align: left;
+    width: 100%;
+}
+
+#content_container table.dataTable tbody tr td{
+    border-bottom:1px solid #e7e7e7;
+    border-left: none;
+    border-right: none;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 12px;
+    line-height: 13px;
+}
+
+table.dataTable.stripe tbody tr.odd,
+table.dataTable.display tbody tr.odd,
+#content_container tr.odd td,
+table.dataTable.hover tbody tr:hover,
+table.dataTable.display tbody tr:hover,
+table.dataTable.display tbody tr:hover>.sorting_1,
+table.dataTable.order-column.hover tbody tr:hover>.sorting_1,
+table.dataTable.display tbody tr.even>.sorting_1,
+table.dataTable.order-column.stripe tbody tr.even>.sorting_1 {
+    background-color: #fff;
+}
+
+#content_container table.dataTable tbody tr td a.button-small{
+    width: auto;
+    background: #444444;
+    border: 1px solid #444444;
+    -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
+    -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
+    color: white;
+    cursor: pointer;
+    display: inline-block;
+    font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 1;
+    margin: 0;
+    outline: none;
+    padding: 10px 20px 11px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    -webkit-transition: background-color 0.15s ease-in-out;
+    -moz-transition: background-color 0.15s ease-in-out;
+    -o-transition: background-color 0.15s ease-in-out;
+    transition: background-color 0.15s ease-in-out;
+}
+
+#content_container table.dataTable tbody tr td a.button-small:hover {
+    background: #fc0000;
+}
+
+#content_container table.dataTable tbody tr td{
+    border-bottom:1px solid #e7e7e7;
+    border-left: none;
+    border-right: none;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 12px;
+    line-height: 13px;
+}
+
+@media only screen and (max-width: 850px) {
+
+    #content_container table.dataTable thead tr th.mobile-hidden,
+    #content_container table.dataTable tbody tr td.mobile-hidden {
+        display: none;
+    }
+
+}

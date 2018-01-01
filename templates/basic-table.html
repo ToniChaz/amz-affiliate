@@ -1,0 +1,65 @@
+<div class="amz-table widefat" data-state="new">
+    <div class="amz-table-head">
+        <div class="amz-number"><p>Shortcode</p></div>
+        <div class="amz-actions">
+            <input type="button" class="button button-danger" onClick="amzTables.deleteRow(this)" value="- Row">
+            <input type="button" class="button button-primary" onClick="amzTables.addRow(this)" value="+ Row">
+            <input type="button" class="button button-danger" onClick="amzTables.deleteColumn(this)" value="- Column">
+            <input type="button" class="button button-primary" onClick="amzTables.addColumn(this)" value="+ Column">
+            <input name="table_name" value="" />
+            <p class="amz-date"></p>
+        </div>
+        <div class="amz-buttons">
+            <input type="button" class="button button-danger" onClick="amzTables.deleteTable(this)" value="Delete">
+            <input type="button" class="button button-primary" onClick="amzTables.saveTable(this)" value="Save">
+            <input type="button" class="button show-hide" onClick="amzTables.showHide(this)" value="Hide">
+        </div>
+    </div>
+    <br class="clear">
+    <div class="amz-table-body">
+        <table class="display cell-border" cellspacing="0" width="100%">
+            <thead>
+            <tr>
+                <th>ASIN</th>
+                <th>Marca y Modelo</th>
+                <th>Precio</th>
+                <th>Info</th>
+                <th>Comprar</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <tr>
+                <th>ASIN</th>
+                <th>Marca y Modelo</th>
+                <th>Precio</th>
+                <th>Info</th>
+                <th>Comprar</th>
+            </tr>
+            </tfoot>
+            <tbody>
+            <tr>
+                <td>ASIN</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <br class="clear">
+    <div class="amz-table-foot">
+        <div class="amz-number"><p>Shortcode</p></div>
+        <div class="amz-actions">
+            <input type="button" class="button button-danger" onClick="amzTables.deleteRow(this)" value="Delete Row">
+            <input type="button" class="button button-primary" onClick="amzTables.addRow(this)" value="Add Row">
+            <input type="button" class="button button-danger" onClick="amzTables.deleteColumn(this)" value="Delete Column">
+            <input type="button" class="button button-primary" onClick="amzTables.addColumn(this)" value="Add Column">
+        </div>
+        <div class="amz-buttons">
+            <input type="button" class="button button-danger" onClick="amzTables.deleteTable(this)" value="Delete table">
+            <input type="button" class="button button-primary" onClick="amzTables.saveTable(this)" value="Save Table">
+            <input type="button" class="button show-hide" onClick="amzTables.showHide(this)" value="Hide">
+        </div>
+    </div>
+</div>

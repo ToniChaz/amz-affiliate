@@ -1,0 +1,124 @@
+.amz-table {
+    border: 1px solid #ddd;
+    background: white;
+    margin-bottom: 30px;
+}
+
+.amz-table-head,
+.amz-table-foot {
+    height: 35px;
+}
+
+.amz-table-head {
+    margin-top: 5px;
+    border-bottom: 1px solid #ddd;
+}
+
+.amz-table-foot {
+    margin-top: 5px;
+    padding-top: 5px;
+    border-top: 1px solid #ddd;
+}
+
+.amz-table-head > div,
+.amz-table-foot > div {
+    float: left;
+}
+
+.amz-number {
+    text-align: center;
+    width: 10%;
+}
+
+.amz-actions {
+    width: 70%;
+    height: 35px;
+}
+
+.amz-actions p {
+    float: right;
+    margin: 6px;
+}
+
+.amz-number p {
+    margin: 6px;
+}
+.amz-buttons {
+    text-align: right;
+    width: 19%;
+    padding-right: 1%;
+}
+
+.amz-table-body {
+    margin: 0 auto;
+    width: 90%;
+}
+
+.amz-table .button-danger {
+    color: white;
+    background: #970b0e;
+    border-color: #87090c;
+}
+
+.amz-table .button-danger:active,
+.amz-table .button-danger:focus,
+.amz-table .button-danger:hover {
+    color: white;
+    background: #a12326;
+    border-color: #87090c;
+}
+
+.amz-table-body table tbody tr {
+    height: 35px;
+}
+
+.amz-table-body table tbody tr td{
+    border: none;
+    vertical-align: middle;
+    font-size: 12px;
+    line-height: 13px;
+}
+
+.amz-table-body table thead th.selected {
+    background-color: #acbad4;
+}
+
+.amz-table-body table tbody td input {
+    width: 100%;
+}
+
+.amz-table-body table tbody tr td a.button-small{
+    color: #555;
+    background: #f7f7f7;
+    -webkit-box-shadow: 0 1px 0 #ccc;
+    box-shadow: 0 1px 0 #ccc;
+    vertical-align: top;
+    display: inline-block;
+    text-decoration: none;
+    font-size: 13px;
+    line-height: 26px;
+    height: 28px;
+    margin: 0;
+    padding: 0 10px 1px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    -webkit-appearance: none;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    white-space: nowrap;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.amz-table-body table tbody tr td a.button-small:hover {
+    background: #f1f1f1;
+}
+
+.loading {
+    width: 54px;
+    height: 54px;
+    margin: 2% auto;
+    background: url(../img/gears-loading.gif) no-repeat;
+    display: none;
+}
