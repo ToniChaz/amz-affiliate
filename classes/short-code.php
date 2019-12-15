@@ -102,9 +102,15 @@ if ( ! class_exists( 'Amz_ShortCode' ) ) {
 						$result .= "<tr>";
 						foreach ( array_slice( $row, 1 ) as $idx => $cell ) {
 							if ( preg_match( '/EUR/', $cell ) ) {
-								$price  = ltrim( $cell, 'EUR ' );
-								$price  .= '€';
-								$result .= "<td><b>$price</b></td>";
+                                $price  = ltrim( $cell, 'EUR ' );
+							    $matches = array();
+                                $has_old_price = preg_match('/\[(.*?)\]/s', $price, $matches);
+                                if ($has_old_price){
+                                    $price = str_replace($matches[0], '&euro;', $price);
+                                    $result .= "<td><b>$price</b><br><span class='old-price'>$matches[1]&euro;</span></td>";
+                                } else {
+                                    $result .= "<td><b>$price&euro;</b></td>";
+                                }
 							} else {
 								if ( in_array( $idx, $array_idx ) ) {
 									$result .= "<td>$cell</td>";

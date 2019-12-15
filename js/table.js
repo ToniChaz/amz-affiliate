@@ -5,7 +5,7 @@
 // Document ready
 jQuery(function () {
 
-    var $ = jQuery;
+    const $ = jQuery;
     window.amzTables = window.amzTables || {};
 
     amzTables.baseURL = '../wp-content/plugins/amz-affiliate/';
@@ -18,7 +18,7 @@ jQuery(function () {
     };
 
     amzTables.setTableId = function () {
-        var currentId = 'table_' + Math.random().toString(36).substr(2, 5);
+        let currentId = 'table_' + Math.random().toString(36).substr(2, 5);
         if (amzTables.tablesIds.indexOf(currentId) > 0) {
             amzTables.setTableId()
         } else {
@@ -32,9 +32,9 @@ jQuery(function () {
     };
 
     amzTables.initTableFunctionality = function (currentIdTable) {
-        var currentTableBody = $(amzTables.tables[currentIdTable].table().body());
-        var currentTableHead = $(amzTables.tables[currentIdTable].table().header());
-        var currentTableFoot = $(amzTables.tables[currentIdTable].table().footer());
+        let currentTableBody = $(amzTables.tables[currentIdTable].table().body());
+        let currentTableHead = $(amzTables.tables[currentIdTable].table().header());
+        let currentTableFoot = $(amzTables.tables[currentIdTable].table().footer());
 
         currentTableHead.on('click', 'th', function () {
             if ($(this).hasClass('selected')) {
@@ -49,7 +49,7 @@ jQuery(function () {
             if ($(this).hasClass('edit')) {
                 return false;
             } else {
-                var value = $(this).html();
+                let value = $(this).html();
                 if (value === 'ASIN') {
                     alert('This value can´t modify.');
                     return false;
@@ -61,8 +61,8 @@ jQuery(function () {
             }
         });
         currentTableHead.on('blur', 'input', function () {
-            var value = $(this).val();
-            var cellIndex = $(this).parents('th')[0].cellIndex;
+            let value = $(this).val();
+            let cellIndex = $(this).parents('th')[0].cellIndex;
             $($('th', currentTableFoot)[cellIndex]).html(value);
             $(this).parents('th').html(value).removeClass('edit');
         });
@@ -80,24 +80,28 @@ jQuery(function () {
             if ($(this).hasClass('edit')) {
                 return false;
             } else {
-                var value = $(this).html();
+                let value = $(this).html();
                 $(this).html($('<textarea cols="40" rows="5">').val(value));
                 $('textarea', $(this)).focus();
                 $(this).addClass('edit');
             }
         });
         currentTableBody.on('blur', 'textarea', function () {
-            var value = $(this).val();
-            $(this).parents('td').html(value).removeClass('edit');
+            let value = $(this).val();
+            let parentTD = $(this).parents('td');
+            parentTD.html(value).removeClass('edit');
             $('#' + currentIdTable).DataTable().destroy();
             amzTables.initDataTable(currentIdTable);
+            if ( parentTD.index() === 0){
+                amzTables.saveTable(parentTD)
+            }
         });
     };
 
     $('#addNewTable').on('click', function () {
         $.get(amzTables.baseURL + 'templates/basic-table.html').then(function (basicTemplate) {
-            var currentTable = $(basicTemplate);
-            var currentIdTable = amzTables.setTableId();
+            let currentTable = $(basicTemplate);
+            let currentIdTable = amzTables.setTableId();
 
             currentTable.find('table').attr('id', currentIdTable);
 
@@ -109,20 +113,20 @@ jQuery(function () {
     });
 
     amzTables.deleteTable = function (that, tableId) {
-        var msg = 'Are you sure do you want to delete this table?';
+        const msg = 'Are you sure do you want to delete this table?';
         if (confirm(msg)) {
-            var parentDiv = $(that).closest('.amz-table');
+            let parentDiv = $(that).closest('.amz-table');
             if (parentDiv.data('state') === 'new') {
                 parentDiv.remove();
             } else {
-                var parentTable = parentDiv.find('table');
-                var currentIdTable = parentTable[0].id;
-                var wrapper = $('#' + currentIdTable + '_wrapper');
+                let parentTable = parentDiv.find('table');
+                let currentIdTable = parentTable[0].id;
+                let wrapper = $('#' + currentIdTable + '_wrapper');
                 parentDiv.find('input[type=button]').attr('disabled', true);
                 wrapper.hide();
                 parentDiv.find('.loading').show();
 
-                var data = {
+                let data = {
                     'action': 'delete_table',
                     'table_id': tableId || parentDiv[0].id
                 };
@@ -141,15 +145,15 @@ jQuery(function () {
     };
 
     amzTables.saveTable = function (that, tableId) {
-        var parentDiv = $(that).closest('.amz-table');
-        var parentTable = parentDiv.find('table');
-        var currentIdTable = parentTable[0].id;
-        var wrapper = $('#' + currentIdTable + '_wrapper');
-        var currentTable = amzTables.tables[currentIdTable];
-        var currentTableHeader = currentTable.columns().header();
-        var currentTableBody = [];
-        var currentTableHead = [];
-        var tableName = $('input[name=table_name]', parentDiv).val();
+        let parentDiv = $(that).closest('.amz-table');
+        let parentTable = parentDiv.find('table');
+        let currentIdTable = parentTable[0].id;
+        let wrapper = $('#' + currentIdTable + '_wrapper');
+        let currentTable = amzTables.tables[currentIdTable];
+        let currentTableHeader = currentTable.columns().header();
+        let currentTableBody = [];
+        let currentTableHead = [];
+        let tableName = $('input[name=table_name]', parentDiv).val();
 
         parentDiv.find('input[type=button]').attr('disabled', true);
         wrapper.hide();
@@ -167,7 +171,7 @@ jQuery(function () {
             tableId = parentDiv[0].id
         }
 
-        var data = {
+        let data = {
             'action': tableId ? 'update_table' : 'save_table',
             'table_head': currentTableHead,
             'table_body': currentTableBody
@@ -196,8 +200,8 @@ jQuery(function () {
             parentDiv.attr('id', itemId);
             if (parentDiv.data('state') === 'new') {
                 $('input', parentDiv[0]).filter(function () {
-                    return this.value === 'Save Table'
-                }).val('Update Table');
+                    return this.value === 'Save'
+                }).val('Update');
             }
         }
 
@@ -209,7 +213,7 @@ jQuery(function () {
             }
             window.amzCommons.notice('notice-success', response.message);
         }, function () {
-            var dataToReDrawTable = {
+            let dataToReDrawTable = {
                 table_head: currentTableHead,
                 table_body: currentTableBody
             };
@@ -218,13 +222,13 @@ jQuery(function () {
     };
 
     amzTables.addRow = function (that) {
-        var parentTable = $(that).closest('.amz-table').find('table').dataTable();
-        var countColumns = parentTable.fnSettings().aoColumns.length;
-        var currentTable = amzTables.tables[parentTable[0].id];
-        var newRows = [];
+        let parentTable = $(that).closest('.amz-table').find('table').dataTable();
+        let countColumns = parentTable.fnSettings().aoColumns.length;
+        let currentTable = amzTables.tables[parentTable[0].id];
+        let newRows = [];
         newRows.push('ASIN');
 
-        for (var i = 1; i < countColumns; i++) {
+        for (let i = 1; i < countColumns; i++) {
             newRows.push('')
         }
 
@@ -232,7 +236,7 @@ jQuery(function () {
     };
 
     amzTables.deleteRow = function (that) {
-        var parentTable = $(that).closest('.amz-table').find('table');
+        let parentTable = $(that).closest('.amz-table').find('table');
 
         if (amzTables.tables[parentTable[0].id].row('.selected')[0].length === 0) {
             alert('You need select one row to delete.');
@@ -241,9 +245,9 @@ jQuery(function () {
     };
 
     amzTables.deleteColumn = function (that) {
-        var parentTable = $(that).closest('.amz-table').find('table');
-        var parentTableId = parentTable[0].id;
-        var selectedTH = $('#' + parentTableId + ' thead th.selected');
+        let parentTable = $(that).closest('.amz-table').find('table');
+        let parentTableId = parentTable[0].id;
+        let selectedTH = $('#' + parentTableId + ' thead th.selected');
 
         if (selectedTH.length === 0) {
             alert('You need select one column to delete.');
@@ -257,9 +261,9 @@ jQuery(function () {
 
         $('#' + parentTableId).DataTable().destroy();
 
-        var selectedTF = $('#' + parentTableId + ' tfoot th')[selectedTH[0].cellIndex];
-        var selectedTR = $('#' + parentTableId + ' tbody tr');
-        for (var i = 0; i < selectedTR.length; i++) {
+        let selectedTF = $('#' + parentTableId + ' tfoot th')[selectedTH[0].cellIndex];
+        let selectedTR = $('#' + parentTableId + ' tbody tr');
+        for (let i = 0; i < selectedTR.length; i++) {
             $('td', selectedTR[i])[selectedTH[0].cellIndex].remove();
         }
         selectedTH.remove();
@@ -269,19 +273,19 @@ jQuery(function () {
     };
 
     amzTables.addColumn = function (that) {
-        var parentTable = $(that).closest('.amz-table').find('table');
-        var parentTableId = parentTable[0].id;
-        var selectedTH = $('#' + parentTableId + ' thead th.selected');
+        let parentTable = $(that).closest('.amz-table').find('table');
+        let parentTableId = parentTable[0].id;
+        let selectedTH = $('#' + parentTableId + ' thead th.selected');
         if (selectedTH.length === 0) {
             alert('You need select one column to add another on right.');
             return false;
         }
-        var selectedTF = $('#' + parentTableId + ' tfoot th')[selectedTH[0].cellIndex];
+        let selectedTF = $('#' + parentTableId + ' tfoot th')[selectedTH[0].cellIndex];
 
-        var selectedTR = $('#' + parentTableId + ' tbody tr');
+        let selectedTR = $('#' + parentTableId + ' tbody tr');
         selectedTH.after("<th></th>");
         $(selectedTF).after("<th></th>");
-        for (var i = 0; i < selectedTR.length; i++) {
+        for (let i = 0; i < selectedTR.length; i++) {
             $($('td', selectedTR[i])[selectedTH[0].cellIndex]).after("<td></td>");
         }
 
@@ -290,10 +294,10 @@ jQuery(function () {
     };
 
     amzTables.showHide = function(that){
-        var childTable = $(that).closest('.amz-table');
-        var childTableBody = $(that).closest('.amz-table').find('.amz-table-body');
-        var childTableFooter = $(that).closest('.amz-table').find('.amz-table-foot');
-        var isVisible = childTableBody.is(':visible');
+        let childTable = $(that).closest('.amz-table');
+        let childTableBody = $(that).closest('.amz-table').find('.amz-table-body');
+        let childTableFooter = $(that).closest('.amz-table').find('.amz-table-foot');
+        let isVisible = childTableBody.is(':visible');
 
         if (isVisible === true) {
             $(childTable).find('.show-hide').val('Show');
@@ -306,9 +310,36 @@ jQuery(function () {
         }
     };
 
+    amzTables.showHideAll = function(that){
+        let thisState = that.value;
+
+        if (thisState === 'Hide all') {
+            $('.amz-table-body').fadeOut();
+            $('.amz-table-foot').fadeOut();
+            that.value = 'Show all';
+        } else {
+            $('.amz-table-body').fadeIn();
+            $('.amz-table-foot').fadeIn();
+            that.value = 'Hide all';
+        }
+    };
+
+    amzTables.reOrder = function(that){
+        let url = new URL(window.location.href);
+        if (url.searchParams.get('re-order')) {
+            let query_string = url.search;
+            let search_params = new URLSearchParams(query_string);
+            search_params.delete('re-order');
+            url.search = search_params.toString();
+            window.location.href = url.toString();
+        } else {
+            window.location.href = window.location.href + '&re-order=true'
+        }
+    };
+
     $('table').each(function (index, value) {
-        var currentTable = $(value);
-        var currentIdTable = amzTables.setTableId();
+        let currentTable = $(value);
+        let currentIdTable = amzTables.setTableId();
 
         currentTable[0].id = currentIdTable;
 

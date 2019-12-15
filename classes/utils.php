@@ -123,6 +123,25 @@ if ( ! class_exists( 'Amz_Utils' ) ) {
 			return $image;
 		}
 
+        /**
+         * Get product list price
+         *
+         * @param product_data
+         *
+         * @return string
+         */
+        public function getProductListPrice( $product_data ) {
+
+            $listPrice        = null;
+            $Obj_product_data = json_decode( $product_data );
+
+            if ( isset( $Obj_product_data->ItemAttributes->ListPrice ) ) {
+                $listPrice = $Obj_product_data->ItemAttributes->ListPrice->FormattedPrice;
+            }
+
+            return $listPrice;
+        }
+
 		/**
 		 * Clean table body from slashes
 		 *
@@ -178,7 +197,16 @@ if ( ! class_exists( 'Amz_Utils' ) ) {
 					}
 
 					if ( $pricePosition && ( $value[ $infoPosition ] == '' || $force_update ) ) {
-						$value[ $pricePosition ] = $currentProduct->product_price;
+                        $price = $currentProduct->product_price;
+                        if (!preg_match('/\bOnly used|No disponible\b/', $price)) {
+                            $listPrice = self::getProductListPrice( $currentProduct->product_data );
+                            $cleanPrice = floatval(ltrim( $price, 'EUR ' ));
+                            $cleanListPrice = floatval(ltrim( $listPrice, 'EUR ' ));
+                            if ($cleanListPrice > $cleanPrice){
+                                $price = $price . '[' .  ltrim( $listPrice, 'EUR ' ) . ']';
+                            }
+                        }
+                        $value[ $pricePosition ] = $price;
 					}
 
 					if ( $infoPosition && $value[ $infoPosition ] == '' ) {
@@ -186,7 +214,7 @@ if ( ! class_exists( 'Amz_Utils' ) ) {
 					}
 
 					if ( $buyPosition && $value[ $buyPosition ] == '' ) {
-						$value[ $buyPosition ] = "<a rel='nofollow' href='" . $currentProduct->product_link . "' class='button-small' target='_blank'>Comprar</a>";
+						$value[ $buyPosition ] = "<a rel='nofollow' href='" . $currentProduct->product_link . "' class='button-small' target='_blank'>Ver Ahora</a>";
 					}
 
 					array_push( $new_table_body, $value );
@@ -242,7 +270,7 @@ if ( ! class_exists( 'Amz_Utils' ) ) {
 		 */
 		public static function setLog( $message ) {
 			$new_date = date( 'Y-m-d H:i:s', strtotime( '+1 hour' ) );
-			file_put_contents( dirname( __DIR__ ) . '/logs.txt', '[' . $new_date . '] ' . $message . "\n", FILE_APPEND );
+			file_put_contents( dirname( __DIR__ ) . '/logs.txt', '[' . $new_date . '] ' . $message . "\n" );
 		}
 
 	} // End class Amz_Utils

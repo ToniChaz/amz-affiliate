@@ -22,10 +22,15 @@ $tables        = $amz_table_api->find_tables();
             <div id="noticeDialog"></div>
             <div class="tablenav top">
                 <input type="button" id="addNewTable" class="button button-primary" value="Add new table">
+                <input type="button" class="button show-hide right" onClick="amzTables.reOrder()" value="Re order">
+                <input type="button" class="button show-hide right" onClick="amzTables.showHideAll(this)" value="Hide all">
                 <br class="clear">
             </div>
             <div id="tablesContent">
 				<?php if ( $tables ) {
+                    if (isset($_GET['re-order'])) {
+                        rsort($tables);
+                    }
 					foreach ( $tables as $table ) { ?>
                         <div class="amz-table widefat">
                             <div class="amz-table-head">
