@@ -32,7 +32,7 @@ $tables        = $amz_table_api->find_tables();
                         rsort($tables);
                     }
 					foreach ( $tables as $table ) { ?>
-                        <div class="amz-table widefat">
+                        <div id="<?php echo $table->table_id; ?>" class="amz-table widefat">
                             <div class="amz-table-head">
                                 <div class="amz-number"><p><?php echo '[amztable_' . $table->table_id . ']'; ?></p></div>
                                 <div class="amz-actions">
